@@ -15,13 +15,25 @@ def mostrar_pedido():
             enviar = st.form_submit_button("✅ Guardar pedido")
             if enviar:
                 try:
-                    cursor.execute(
-                        "INSERT INTO Pedidos (id_cliente, id_producto, cantidad, fecha) VALUES (%s, %s, %s, %s)",
-                        (id_cliente, id_producto, cantidad, fecha)
-                    )
-                    con.commit()
-                    st.success("✅ Pedido registrado correctamente")
-                    st.rerun()
+                    # Verificar stock disponible
+                    cursor.execute("SELECT stock FROM Productos WHERE id_producto = %s", (id_producto,))
+                    resultado = cursor.fetchone()
+                    if resultado is None:
+                        st.warning("⚠️ No existe un producto con ese ID.")
+                    elif resultado[0] < cantidad:
+                        st.warning(f"⚠️ Stock insuficiente. Stock disponible: {resultado[0]}")
+                    else:
+                        cursor.execute(
+                            "INSERT INTO Pedidos (id_cliente, id_producto, cantidad, fecha) VALUES (%s, %s, %s, %s)",
+                            (id_cliente, id_producto, cantidad, fecha)
+                        )
+                        cursor.execute(
+                            "UPDATE Productos SET stock = stock - %s WHERE id_producto = %s",
+                            (cantidad, id_producto)
+                        )
+                        con.commit()
+                        st.success("✅ Pedido registrado correctamente y stock actualizado")
+                        st.rerun()
                 except Exception as e:
                     con.rollback()
                     st.error(f"❌ Error al registrar el pedido: {e}")
