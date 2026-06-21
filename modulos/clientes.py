@@ -1,4 +1,5 @@
 import streamlit as st
+import pandas as pd
 from modulos.config.conexion import obtener_conexion
 def mostrar_cliente():
     st.header("👤 Registrar cliente")
@@ -30,7 +31,9 @@ def mostrar_cliente():
         st.subheader("📋 Clientes registrados")
         cursor.execute("SELECT id_cliente, nombre, telefono, correo FROM Clientes")
         registros = cursor.fetchall()
-        st.dataframe(registros)
+        columnas = [desc[0] for desc in cursor.description]
+        df = pd.DataFrame(registros, columns=columnas)
+        st.dataframe(df)
     except Exception as e:
         st.error(f"❌ Error general: {e}")
     finally:
