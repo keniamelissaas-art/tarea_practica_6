@@ -26,6 +26,11 @@ def mostrar_producto():
                     except Exception as e:
                         con.rollback()
                         st.error(f"❌ Error al registrar el producto: {e}")
+        # Mostrar los registros existentes
+        st.subheader("📋 Productos registrados")
+        cursor.execute("SELECT id_producto, nombre, precio, stock FROM Productos")
+        registros = cursor.fetchall()
+        st.dataframe(registros)
     except Exception as e:
         st.error(f"❌ Error general: {e}")
     finally:
