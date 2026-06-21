@@ -1,14 +1,11 @@
 import streamlit as st
 from modulos.config.conexion import obtener_conexion
-
 def mostrar_cliente():
     st.header("👤 Registrar cliente")
-    
-  try:
+    try:
         con = obtener_conexion()
         cursor = con.cursor()
-        
-      # Formulario para registrar el cliente
+        # Formulario para registrar el cliente
         with st.form("form_cliente"):
             nombre = st.text_input("Nombre")
             telefono = st.text_input("Teléfono")
