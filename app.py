@@ -11,11 +11,11 @@ if "sesion_iniciada" in st.session_state and st.session_state["sesion_iniciada"]
   seleccion = st.sidebar.selectbox("Selecciona una opción", opciones)
   # Según la opción seleccionada, mostramos el contenido correspondiente
   if seleccion == "Clientes":
-    mostrar_clientes()
+    mostrar_cliente()
   elif seleccion == "Productos":
-    mostrar_productos()
+    mostrar_producto()
   elif seleccion == "Pedidos":
-    mostrar_pedidos()
+    mostrar_pedido()
 else:
 # Si la sesión no está iniciada, mostrar el login
   login()
