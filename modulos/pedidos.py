@@ -1,4 +1,5 @@
 import streamlit as st
+import pandas as pd
 from modulos.config.conexion import obtener_conexion
 def mostrar_pedido():
     st.header("🧾 Registrar pedido")
@@ -24,6 +25,13 @@ def mostrar_pedido():
                 except Exception as e:
                     con.rollback()
                     st.error(f"❌ Error al registrar el pedido: {e}")
+        # Mostrar los registros existentes
+        st.subheader("📋 Pedidos registrados")
+        cursor.execute("SELECT id_pedido, id_cliente, id_producto, cantidad, fecha FROM Pedidos")
+        registros = cursor.fetchall()
+        columnas = [desc[0] for desc in cursor.description]
+        df = pd.DataFrame(registros, columns=columnas)
+        st.dataframe(df)
     except Exception as e:
         st.error(f"❌ Error general: {e}")
     finally:
