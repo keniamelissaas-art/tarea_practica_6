@@ -7,17 +7,15 @@ from modulos.pedidos import agregar_pedido
 # Comprobamos si la sesión ya está iniciada
 if "sesion_iniciada" in st.session_state and st.session_state["sesion_iniciada"]:
   # Mostrar el menú lateral
-  opciones = ["Ventas", "Clientes", "Productos", "Pedidos"] # Agrega más opciones si las necesitas
+  opciones = ["Clientes", "Productos", "Pedidos"] # Agrega más opciones si las necesitas
   seleccion = st.sidebar.selectbox("Selecciona una opción", opciones)
   # Según la opción seleccionada, mostramos el contenido correspondiente
-  if seleccion == "Ventas":
-    mostrar_venta()
-  elif seleccion == "Clientes":
-    agregar_cliente()
+  if seleccion == "Clientes":
+    mostrar_clientes()
   elif seleccion == "Productos":
-    agregar_producto()
+    mostrar_productos()
   elif seleccion == "Pedidos":
-    agregar_pedido()
+    mostrar_pedidos()
 else:
 # Si la sesión no está iniciada, mostrar el login
   login()
