@@ -1,6 +1,5 @@
 # app.py
 import streamlit as st
-from modulos.venta import mostrar_venta  # Importamos la función mostrar_venta del módulo venta
 from modulos.login import login
 from modulos.clientes import agregar_cliente
 from modulos.productos import agregar_producto
