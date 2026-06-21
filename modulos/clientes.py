@@ -26,6 +26,11 @@ def mostrar_cliente():
                     except Exception as e:
                         con.rollback()
                         st.error(f"❌ Error al registrar el cliente: {e}")
+        # Mostrar los registros existentes
+        st.subheader("📋 Clientes registrados")
+        cursor.execute("SELECT id_cliente, nombre, telefono, correo FROM Clientes")
+        registros = cursor.fetchall()
+        st.dataframe(registros)
     except Exception as e:
         st.error(f"❌ Error general: {e}")
     finally:
